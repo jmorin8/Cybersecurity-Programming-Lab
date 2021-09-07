@@ -1,0 +1,43 @@
+#!/bin/bash
+
+Create() {
+    if [[ "$option" == "CTF" ]]
+    then    
+        if [[ -d $2 ]]; then # Validates if dir gave by user exists or not
+            echo "[ERROR] Directory already exists"
+        else
+            mkdir $2 > /dev/null 2>&1 && echo "[*] Directory $2 created into $PWD..." && cd $2
+
+            [ $? -eq 0 ] && echo "[*] Moved into $2 directory..." && echo "[*] Created directories for categories " && mkdir Web Crypto Forensic OSINT
+        fi
+    
+    elif [[ "$option" == "Pentest" ]]
+    then
+        if [[ -d $2 ]]; then # Validates if dir gave by user exists or not
+            echo "[ERROR] Directory already exists"
+        else
+            mkdir $2 > /dev/null 2>&1 && echo "[*] Directory $2 created into $PWD..." && cd $2
+                
+            [ $? -eq 0 ] && echo "[*] Moved into $2 directory..." && echo "[*] Created empty files for scan and notes" && touch Scan.txt Notes.txt 
+            
+            [ $? -eq 0 ] && read -p "[INPUT] Enter IP adress to scan: " ip && echo "[*] Performing scan" && echo "[*] Scan finished, saved into SCAN.TXT file"
+                
+            firstPort=10
+            lastPort=500
+            for ((port=$firstPort; port<=$lastPort; port++));
+            do
+                (echo >/dev/tcp/$ip/$port) > /dev/null 2>&1 && echo "port: $port open" >> Scan.txt
+            done
+        fi
+    else
+        echo "$CTFusage" && echo "$Pentestusage"
+    fi  
+}
+
+option=$1
+Dirname=$2
+
+CTFusage="[USAGE] DirCreator.sh {CTF} {Dirname}"
+Pentestusage="[USAGE] DirCreator.sh {Pentest} {Dirname}"
+
+Create $1 $2 
