@@ -8,7 +8,7 @@ This `Practice #2` was about to create two scripts one of them in Bash and the o
 * one function with a parameter
 
 ## Bash Script 
-This script has two options 
+This script has two options
 
 ### Option 1
 Directories for CTF competitions, usage `DirCreator CTF dirName`
