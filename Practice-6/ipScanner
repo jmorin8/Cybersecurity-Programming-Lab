@@ -10,7 +10,7 @@ lastPort=1024
 function scan {
 	echo "-----SCRIPT Scan results-----"
 	echo "[*] Scanning $1"
-	#for ((counter=$firstPort; counter<=$lastPort; counter++))
+
 	for ((port=$firstPort; port<$lastPort; port++)); 
 	do
 		(echo >/dev/tcp/$1/$port) > /dev/null 2>&1 && echo "[*] port $port open"
